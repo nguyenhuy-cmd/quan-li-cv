@@ -83,6 +83,9 @@ export class UsersService {
 
   async update(id: number, updateUserDto: UpdateUserDto) {
     const foundUser = await this.userRepository.update(id, updateUserDto)
+    if(!foundUser){
+      throw new NotFoundException('Không tìm thấy user')
+    }
     return `This action updates a #${id} user`;
   }
 

@@ -5,6 +5,10 @@ import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module.js';
+import { AuthModule } from './auth/auth.module.js';
+import { ProjectsModule } from './projects/projects.module.js';
+import { TasksModule } from './tasks/tasks.module.js';
+import { CommentsModule } from './comments/comments.module.js';
 
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
@@ -36,6 +40,9 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     }),
     UsersModule,
     AuthModule,
+    ProjectsModule,
+    TasksModule,
+    CommentsModule,
   ],
 
   controllers: [AppController],
