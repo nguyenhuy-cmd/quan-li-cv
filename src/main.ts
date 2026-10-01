@@ -4,7 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
-    instrument: ObserveInstrument,
+    // instrument: ObserveInstrument,
   });
   // Kích hoạt tính năng đọc các decorator validate trong DTO
   app.useGlobalPipes(
