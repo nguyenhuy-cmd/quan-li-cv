@@ -1,10 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards } from '@nestjs/common';
 import { ProjectsService } from './projects.service.js';
 import { CreateProjectDto } from './dto/create-project.dto.js';
 import { UpdateProjectDto } from './dto/update-project.dto.js';
 import { ResponseMessage } from '../decorators/customize.js';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js';
 
 @Controller('projects')
+@UseGuards(JwtAuthGuard) // <--- Chặn ở mức Controller, bảo vệ TẤT CẢ các API bên dưới
 export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
