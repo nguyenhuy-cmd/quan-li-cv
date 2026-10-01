@@ -1,4 +1,7 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { PartialType, OmitType } from '@nestjs/mapped-types';
 import { CreateProjectDto } from './create-project.dto.js';
 
-export class UpdateProjectDto extends PartialType(CreateProjectDto) {}
+// Dùng OmitType để loại bỏ trường 'ownerId', sau đó dùng PartialType để biến các trường còn lại thành không bắt buộc
+export class UpdateProjectDto extends PartialType(
+    OmitType(CreateProjectDto, ['ownerId'] as const)
+) {}

@@ -1,4 +1,4 @@
-import { IsEmail } from "class-validator";
+import { IsEmail, IsString, IsNotEmpty, IsEnum } from "class-validator";
 import { Entity, Column, CreateDateColumn, DeleteDateColumn, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 import type { Relation } from "typeorm";
 import { Project } from "../../projects/entities/project.entity.js";
@@ -43,30 +43,25 @@ export class User {
 }
 
 export class LoginUserDto{
-  @Column({type: 'varchar', length: 100})
   @IsEmail()
   email: string;
 
-  @Column({type:'varchar', length: 100})
+  @IsString()
+  @IsNotEmpty()
   password: string;
 }
 export class RegisterUserDto{
-  @Column({type:"varchar", length: 100})
-    Full_name: string;
+  @IsString()
+  @IsNotEmpty()
+  Full_name: string;
 
-    @Column({type:'varchar', length: 100})
-    @IsEmail()
-    email: string;
+  @IsEmail()
+  email: string;
 
-    @Column({type:'varchar', length: 100})
-    password: string;
-
+  @IsString()
+  @IsNotEmpty()
+  password: string;
     
-    @Column({
-        type: 'enum',
-        enum: UserRole,
-        default: UserRole.USER
-    })
-    role:UserRole;
-
+  @IsEnum(UserRole)
+  role:UserRole;
 }

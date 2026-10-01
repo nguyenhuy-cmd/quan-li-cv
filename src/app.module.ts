@@ -19,11 +19,11 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     ConfigModule.forRoot({
       isGlobal: true, // Cho phép dùng cấu hình ở mọi module
     }),
-    ObserveModule.forRoot({
-      appKey: 'YOUR_APP_KEY',
+    /*ObserveModule.forRoot({
+      appKey: 'JWT_SECRET',
       appSecret: 'YOUR_APP_SECRET',
       serviceId: 'quan-li-cv',
-    }),
+    }),*/
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

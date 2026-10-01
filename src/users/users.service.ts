@@ -61,6 +61,12 @@ export class UsersService {
     // 5. Tính tổng số trang
     const totalPages = Math.ceil(totalItems / defaultLimit);
 
+    // Xóa trường password trước khi trả về cho Frontend
+    const safeResult = result.map(user => {
+      const { password, ...rest } = user;
+      return rest;
+    });
+
     // 6. Trả về đúng format chuẩn cho Frontend
     return {
       meta: {
@@ -69,7 +75,7 @@ export class UsersService {
         pages: totalPages,       // Tổng số trang
         total: totalItems,       // Tổng số bản ghi thỏa điều kiện
       },
-      result,                    // Mảng dữ liệu trả về
+      result: safeResult,        // Mảng dữ liệu trả về đã được làm sạch
     };
   }
 
@@ -78,20 +84,28 @@ export class UsersService {
     if(!foundUser){
       throw new NotFoundException("Tài khoản không tồn tại")
     }
-    return foundUser;
+    const { password, ...safeUser } = foundUser;
+    return safeUser;
+  }
+
+  async findByEmail(email: string) {
+    return await this.userRepository.findOne({ where: { email } });
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    const foundUser = await this.userRepository.update(id, updateUserDto)
-    if(!foundUser){
-      throw new NotFoundException('Không tìm thấy user')
+    const updateResult = await this.userRepository.update(id, updateUserDto)
+    if(updateResult.affected === 0){ 
+      throw new NotFoundException('Không tìm thấy user hoặc không có gì thay đổi')
     }
-    return `This action updates a #${id} user`;
+    return {
+      message: `Cập nhật thành công tài khoản có ID = ${id}`,
+      id: id,
+    };
   }
 
   async  remove(id: number) {
-    const foundUser  = await this.userRepository.delete(id);
-    if(!foundUser){
+    const deleteResult  = await this.userRepository.delete(id);
+    if(deleteResult.affected === 0){
       throw new NotFoundException("Tài khoản không tồn tại")
     }
     return {

@@ -10,12 +10,12 @@ export class ProjectsService {
   constructor(
     @InjectRepository(Project)
     private projectRepository: Repository<Project>,
-  ){}
+  ) { }
 
   async create(createProjectDto: CreateProjectDto) {
     // 1. Tạo đối tượng project mới (lệnh này chạy đồng bộ nên không cần await)
     const newProject = this.projectRepository.create(createProjectDto);
-    
+
     // 2. Lưu vào database (lệnh này cần await)
     return await this.projectRepository.save(newProject);
   }
@@ -24,16 +24,16 @@ export class ProjectsService {
     // 1. Ép kiểu và gán giá trị mặc định nếu client không truyền
     const page = parseInt(currentPage, 10) > 0 ? parseInt(currentPage, 10) : 1;
     const defaultLimit = parseInt(limit, 10) > 0 ? parseInt(limit, 10) : 10;
-    
+
     // 2. Tính số bản ghi cần bỏ qua
     const skip = (page - 1) * defaultLimit;
-    
+
     // 3. Xử lý điều kiện lọc từ qs
     const whereCondition: any = {};
     if (qs?.name) {
       whereCondition.name = Like(`%${qs.name}%`);
     }
-    
+
     // 4. Lấy dữ liệu và đếm tổng số bản ghi
     const [result, totalItems] = await this.projectRepository.findAndCount({
       where: whereCondition,
@@ -58,18 +58,20 @@ export class ProjectsService {
   }
 
   async findOne(id: number) {
-    const exProject = await this.projectRepository.findOne({where: {id}})
-    if(!exProject){
+    const exProject = await this.projectRepository.findOne({ where: { id } })
+    if (!exProject) {
       throw new NotFoundException('Không tìm thấy ID của oroject trên')
     }
     return exProject;
   }
 
   async update(id: number, updateProjectDto: UpdateProjectDto) {
+    
     const exUpdate = await this.projectRepository.update(id, updateProjectDto)
-    if(!exUpdate){
+    if (exUpdate.affected === 0) {
       throw new NotFoundException('Không tìm thấy project')
     }
+  
     return {
       id: id,
       exUpdate
@@ -78,8 +80,8 @@ export class ProjectsService {
 
   async remove(id: number) {
     const exDelete = await this.projectRepository.delete(id);
-    if(!exDelete){
-      throw new NotFoundException('không tìm thấy project')
+    if (exDelete.affected === 0) {
+      throw new NotFoundException(' không tìm thấy project')
     }
     return {
       id: id,

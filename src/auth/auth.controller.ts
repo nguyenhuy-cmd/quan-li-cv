@@ -11,17 +11,17 @@ import { RegisterUserDto } from '../users/dto/create-user.dto.js';
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
-  ) {}
+  ) { }
 
-  @Post('Đăng nhập')
+  @Post('login')
   @ResponseMessage("Đăng nhập thành công")
-  async handleLogin(@Req() req: any) {
-    return await this.authService.login(req.user);
+  async handleLogin(@Body() loginUserDto: LoginUserDto) {
+    return await this.authService.login(loginUserDto);
   }
 
-  @Post('Đăng kí')
+  @Post('register')
   @ResponseMessage("Đăng kí thành công")
-  async handleRegister(@Body() registerUserDto: RegisterUserDto){
+  async handleRegister(@Body() registerUserDto: RegisterUserDto) {
     return await this.authService.register(registerUserDto)
   }
 }

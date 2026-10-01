@@ -1,4 +1,5 @@
-import { IsString, IsNotEmpty, IsOptional } from "class-validator";
+import { IsString, IsNotEmpty, IsOptional, IsEnum } from "class-validator";
+import { UserRole } from "../entities/user.entity.js";
 
 export class CreateUserDto {
   @IsString({ message: "Họ tên phải là chuỗi" })
@@ -12,6 +13,10 @@ export class CreateUserDto {
   @IsString({ message: "Mật khẩu phải là chuỗi" })
   @IsNotEmpty({ message: "Mật khẩu phải bắt buộc" })
   password: string;
+
+  @IsOptional({ message: "Vai trò không bắt buộc phải điền" })
+  @IsEnum(UserRole, { message: "Vai trò không hợp lệ" })
+  role?: UserRole;
 }
 
 export class RegisterUserDto {
@@ -28,6 +33,6 @@ export class RegisterUserDto {
   password: string;
 
   @IsOptional({message:"Vai trò không bắt buộc phải điền"})
-  @IsString({message: "Vai trò phải là chuỗi"})
-  role?: string;
+  @IsEnum(UserRole, { message: "Vai trò không hợp lệ" })
+  role?: UserRole;
 }
