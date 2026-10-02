@@ -25,7 +25,8 @@ jobs:
         cache: 'npm'
 
     - name: Install dependencies
-      run: npm install
+      # Dùng npm ci thay vì npm install trên môi trường CI để tránh lỗi thiếu các module OS-specific (như oxlint trên Linux)
+      run: npm ci
 
     - name: Run lint (nếu có)
       run: npm run lint --if-present
