@@ -14,6 +14,6 @@ async function bootstrap() {
       transform: true, // Tự động convert kiểu dữ liệu tương ứng (string sang number, boolean...)
     }),
   );
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(process.env.PORT ?? 3000, '0.0.0.0');
 }
 await bootstrap();
