@@ -5,6 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    restart: unless-stopped
     ports:
       - '3000:3000'
     env_file:
@@ -19,6 +20,7 @@ services:
 
   mysql:
     image: mysql:8
+    restart: unless-stopped
     ports:
       - '3306:3306'
     environment:
