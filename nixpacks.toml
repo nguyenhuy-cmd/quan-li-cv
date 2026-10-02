@@ -1,0 +1,8 @@
+[phases.setup]
+nodeVersion = "18"
+
+[phases.build]
+commands = ["npm install", "npm run build"]
+
+[start]
+cmd = "npm run start:prod"
