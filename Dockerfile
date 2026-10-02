@@ -20,3 +20,7 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 
 CMD ["node", "dist/main.js"]
+RUN npm install --production
+COPY --from=builder /app ./ 
+# (Hoặc copy thư mục dist nếu dùng NestJS: COPY --from=builder /app/dist ./dist)
+
