@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module.js';
 import { ProjectsModule } from './projects/projects.module.js';
 import { TasksModule } from './tasks/tasks.module.js';
 import { CommentsModule } from './comments/comments.module.js';
+import { AppController } from './app.controller.js';
 
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
@@ -42,5 +43,6 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     TasksModule,
     CommentsModule,
   ],
+  controllers: [AppController],
 })
 export class AppModule {}
